@@ -30,7 +30,6 @@ public class RecorderClass implements Runnable{
       } 
    } 
    public void run() {
-      int counter = 0;
       final IMediaWriter writer = ToolFactory.makeWriter("test.mp4");
       Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
       writer.addVideoStream(0, 0, ICodec.ID.CODEC_ID_MPEG4,screenSize.width, screenSize.height);
@@ -49,7 +48,6 @@ public class RecorderClass implements Runnable{
          } catch(InterruptedException ie) {
          
          }
-         counter++; 
       }
       writer.close();
 
