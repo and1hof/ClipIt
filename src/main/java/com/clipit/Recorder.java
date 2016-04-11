@@ -1,5 +1,6 @@
 package com.clipit;
 
+import com.dropbox.core.DbxException;
 import com.xuggle.mediatool.IMediaWriter;
 import com.xuggle.mediatool.ToolFactory;
 import com.xuggle.xuggler.ICodec;
@@ -58,6 +59,13 @@ public class Recorder implements Runnable{
          }
       }
       writer.close();
+      try {
+         UploadManager.upload(file);
+      } catch (IOException e) {
+         e.printStackTrace();
+      } catch (DbxException e) {
+         e.printStackTrace();
+      }
 
    }
    public void start()
