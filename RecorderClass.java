@@ -65,6 +65,7 @@ public class RecorderClass implements Runnable{
    }
     
 }
+/*test method for debugging
 class TestThread {
    public static void main(String args[]) {
       RecorderClass myRecorder = new RecorderClass();
@@ -78,4 +79,4 @@ class TestThread {
       myRecorder.stop();
       
    }   
-}
+}*/
