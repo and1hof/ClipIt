@@ -1,9 +1,4 @@
 package com.clipit;
-/*
- * Event Listeners TCSS 305
- */
-
-//package view;
 
 import com.xuggle.mediatool.IMediaWriter;
 import com.xuggle.mediatool.ToolFactory;
@@ -37,13 +32,13 @@ public class Recorder implements Runnable{
    } 
    public void run() {
       unixTime = System.currentTimeMillis() / 1000L;
-      File file = new File(unixTime + ".mp4");
+      File file = new File("recordings/" + unixTime + ".mp4");
       try {
          boolean created = file.createNewFile();
       } catch (IOException e) {
          e.printStackTrace();
       }
-      final IMediaWriter writer = ToolFactory.makeWriter(unixTime + ".mp4");
+      final IMediaWriter writer = ToolFactory.makeWriter("recordings/" + unixTime + ".mp4");
       Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
       writer.addVideoStream(0, 0, ICodec.ID.CODEC_ID_MPEG4,screenSize.width, screenSize.height);
       long startTime = System.nanoTime();

@@ -10,6 +10,9 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class is responsible for managing input from the user (keys).
@@ -33,6 +36,15 @@ public class InputManager implements NativeKeyListener {
 	static String modifier = "";
 
     public static void manageInput() throws FileNotFoundException {
+        Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
+        logger.setLevel(Level.OFF);
+
+// Change the level for all handlers attached to the default logger.
+        Handler[] handlers = Logger.getLogger("").getHandlers();
+        for (int i = 0; i < handlers.length; i++) {
+            handlers[i].setLevel(Level.OFF);
+        }
+
         Scanner settings = new Scanner(new File("settings.conf"));
         settings.nextLine();
         modifier = settings.next() + " " + settings.next();
@@ -52,7 +64,6 @@ public class InputManager implements NativeKeyListener {
     }
 
     public static void redDot() {
-
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice defaultScreen = ge.getDefaultScreenDevice();
         Rectangle rect = defaultScreen.getDefaultConfiguration().getBounds();

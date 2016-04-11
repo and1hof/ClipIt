@@ -77,7 +77,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/xuggle-xuggler-3.0.660.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/xuggle-xuggler-5.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
