@@ -29,12 +29,13 @@ public class InputManager implements NativeKeyListener {
     static ImageIcon icon = new ImageIcon("red_bl.gif");
 	static JLabel label = new JLabel(icon);
 	static JFrame frame = new JFrame();
-	static Recorder myRecorder = new Recorder();
-	
-	static boolean myFlag;
+	static Recorder myRecorder = null;
+	static long startTime;
+	static long stopTime;
+	static boolean first_key_pressed;
 	static String key = "";
 	static String modifier = "";
-
+	static boolean dot_showing = false;
     public static void manageInput() throws FileNotFoundException {
         Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
         logger.setLevel(Level.OFF);
@@ -78,22 +79,35 @@ public class InputManager implements NativeKeyListener {
         frame.setUndecorated(true);
         frame.pack();
         frame.setVisible(true);
+        dot_showing = true;
     }
     
     public void nativeKeyPressed(NativeKeyEvent e) {
+    	
         //System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
-
-        if (myFlag == true && NativeKeyEvent.getKeyText(e.getKeyCode()).equals(key)) {
-        	redDot();
+    	
+    	if (NativeKeyEvent.getKeyText(e.getKeyCode()).equals("Left Alt")) {
+    		first_key_pressed = true;
+        }
+    	
+        if (NativeKeyEvent.getKeyText(e.getKeyCode()).equals(key) && first_key_pressed) {
+        	myRecorder = new Recorder();
+        	if(!dot_showing) {
+        		redDot();
+        	}
             myRecorder.start();
-        	myFlag = false;
+        	first_key_pressed = false;
 
     }
-
-    	// when call stop() myFlag = false
+       
+    	// when call stop() myFlag = falssse
     	if (NativeKeyEvent.getKeyText(e.getKeyCode()).equals("S")) {
-            myRecorder.stop();
-            frame.dispose();
+            if(myRecorder != null) {
+	    		myRecorder.stop();
+	            frame.dispose();
+	            dot_showing = false;
+            }
+            myRecorder = null;
     	}
 
         if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
@@ -107,12 +121,10 @@ public class InputManager implements NativeKeyListener {
     }
 
     public void nativeKeyReleased(NativeKeyEvent e) {
-
+    	first_key_pressed = false;
 
         //System.out.println("Key Released: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
-        if (NativeKeyEvent.getKeyText(e.getKeyCode()).equals("Left Alt")) {
-        	myFlag = true;
-        }
+        
     }
 
     public void nativeKeyTyped(NativeKeyEvent e) {
