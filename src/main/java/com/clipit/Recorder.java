@@ -143,12 +143,11 @@ import java.util.concurrent.TimeUnit;
             break;
          }
       }
-      videoCoder.open(null,null);
-      audioCoder.open(null,null);
-
       if(videoCoder == null || audioCoder == null) {
          throw new RuntimeException("audio or video stream is missing");
       }
+      videoCoder.open(null,null);
+      audioCoder.open(null,null);
       comboWriter.addAudioStream(0, 0, audioCoder.getChannels(), audioCoder.getSampleRate());
       comboWriter.addVideoStream(1, 1, videoCoder.getWidth(), videoCoder.getHeight());
       IPacket audioPacket = IPacket.make();
